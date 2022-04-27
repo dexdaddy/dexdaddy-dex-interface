@@ -328,14 +328,14 @@ export default function Swap() {
         </WarningWrapper>
       )}
 
-      <TopText>
+      {/* <TopText>
         <Trans i18nKey="swapPage.velox">
           Set a limit order on
           <VeloxLink href={'https://app.velox.global/'} target={'_blank'}>
             Velox
           </VeloxLink>
         </Trans>
-      </TopText>
+      </TopText> */}
 
       <AppBody>
         <SwapPoolTabs active={'swap'} />
@@ -553,7 +553,7 @@ export default function Swap() {
       </AppBody>
 
       <AdvancedSwapDetailsDropdown trade={trade} />
-
+      {/* 
       <BottomText>
         <AutoRow>
           <Trans i18nKey="swapPage.marginSwap">
@@ -569,7 +569,7 @@ export default function Swap() {
             </WowSwapLink>
           </Trans>
         </AutoRow>
-      </BottomText>
+      </BottomText> */}
     </>
   )
 }

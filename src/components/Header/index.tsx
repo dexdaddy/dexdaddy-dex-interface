@@ -325,7 +325,7 @@ export default function Header() {
             <img width={'24px'} src={isDark ? LogoDark : Logo} alt="logo" />
           </PngIcon>
         </Title>
-        <HeaderLinks>
+        {/* <HeaderLinks>
           <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
             {t('header.swap')}
           </StyledNavLink>
@@ -378,11 +378,11 @@ export default function Header() {
           <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
             {t('header.charts')} <span style={{ fontSize: '11px' }}>↗</span>
           </StyledExternalLink>
-        </HeaderLinks>
+        </HeaderLinks> */}
       </HeaderRow>
       <HeaderControls>
         <HeaderElement>
-          <Hidden upToSmall={true}>
+          {/* <Hidden upToSmall={true}>
             <Button
               variant="primary"
               height={36}
@@ -394,7 +394,7 @@ export default function Header() {
             >
               <span style={{ whiteSpace: 'nowrap' }}>{t('header.switchToNewUI')}</span>
             </Button>
-          </Hidden>
+          </Hidden> */}
           <Hidden upToSmall={true}>
             {NETWORK_LABELS[chainId] && (
               <NetworkCard title={NETWORK_LABELS[chainId]}>{NETWORK_LABELS[chainId]}</NetworkCard>
@@ -435,11 +435,11 @@ export default function Header() {
             <Web3Status />
           </AccountElement>
         </HeaderElement>
-        <HeaderElementWrap>
+        {/* <HeaderElementWrap>
           <Settings />
           <LanguageSelection />
           <Menu />
-        </HeaderElementWrap>
+        </HeaderElementWrap> */}
       </HeaderControls>
     </HeaderFrame>
   )

@@ -8,7 +8,9 @@
       "jsx": true
     }
   },
-  "ignorePatterns": ["node_modules/**/*"],
+  "ignorePatterns": [
+    "node_modules/**/*"
+  ],
   "settings": {
     "react": {
       "version": "detect"
@@ -21,12 +23,21 @@
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["react", "react-hooks", "prettier"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "prettier"
+  ],
   "rules": {
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
       }
     ],
     "@typescript-eslint/explicit-function-return-type": "off",
