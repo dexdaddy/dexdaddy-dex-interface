@@ -48,7 +48,7 @@ export const MenuItem = styled.div<{ isActive?: boolean }>`
   line-height: 24px;
   padding: 8px;
   height: 50px;
-  background-color: ${({ theme, isActive }) => (isActive ? theme.primary : 'transparent')};
+  background-color: #081e28;
   border-radius: 9px;
   margin-bottom: 5px;
   overflow-y: hidden;

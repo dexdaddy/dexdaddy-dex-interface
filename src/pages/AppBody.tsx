@@ -5,10 +5,10 @@ export const BodyWrapper = styled.div`
   position: relative;
   max-width: 420px;
   width: 100%;
-  background: ${({ theme }) => theme.bg1};
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
-    0px 24px 32px rgba(0, 0, 0, 0.01);
+  background: #081e28;
+  box-shadow: 0px 0px 72px #27ae604a, 1px 6px 16px #2172e533, 0px 16px 87px #5399ff33, 0px 24px 32px #1966d429;
   border-radius: 30px;
+  border: 0.7px solid #128693b0;
   padding: 1rem;
 `
 

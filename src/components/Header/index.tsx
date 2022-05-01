@@ -79,7 +79,7 @@ const HeaderControls = styled.div`
     z-index: 99;
     height: 72px;
     border-radius: 12px 12px 0 0;
-    background-color: ${({ theme }) => theme.bg1};
+    background-color:#021823;
   `};
 `
 
@@ -144,6 +144,7 @@ const PNGWrapper = styled.span`
   width: fit-content;
   position: relative;
   cursor: pointer;
+  display: none;
   :hover {
     opacity: 0.8;
   }
