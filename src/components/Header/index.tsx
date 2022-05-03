@@ -372,28 +372,28 @@ export default function Header() {
           >
             {t('header.stake')}
           </StyledNavLink> */}
-          <StyledExternalLink id={`vote-nav-link`} href={'https://mint.dexdaddy.com/#/app/dashboard'}>
+          <StyledExternalLink id={`vote-nav-link`} href={''}>
             Mint
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+          <StyledExternalLink id={`info-nav-link`} href={``}>
             Marketplace
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+          <StyledExternalLink id={`info-nav-link`} href={``}>
             Launchpad
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+          <StyledExternalLink id={`info-nav-link`} href={``}>
             Dex
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+          <StyledExternalLink id={`info-nav-link`} href={``}>
             Farm
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+          <StyledExternalLink id={`info-nav-link`} href={``}>
             Sale Events
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+          <StyledExternalLink id={`info-nav-link`} href={``}>
             Metaverse
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+          <StyledExternalLink id={`info-nav-link`} href={``}>
             Games
           </StyledExternalLink>
         </HeaderLinks>
