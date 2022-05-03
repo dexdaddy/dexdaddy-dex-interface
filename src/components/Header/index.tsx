@@ -79,7 +79,7 @@ const HeaderControls = styled.div`
     z-index: 99;
     height: 72px;
     border-radius: 12px 12px 0 0;
-    background-color:#021823;
+    background-color: ${({ theme }) => theme.bg1};
   `};
 `
 
@@ -137,14 +137,13 @@ const PNGAmount = styled(AccountElement)`
   height: 36px;
   font-weight: 500;
   background-color: ${({ theme }) => theme.bg3};
-  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #f97316 0%, #e84142 100%), #edeef2;
+  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #22aaa3 0%, #12729a 100%), #edeef2;
 `
 
 const PNGWrapper = styled.span`
   width: fit-content;
   position: relative;
   cursor: pointer;
-  display: none;
   :hover {
     opacity: 0.8;
   }
@@ -326,8 +325,8 @@ export default function Header() {
             <img width={'24px'} src={isDark ? LogoDark : Logo} alt="logo" />
           </PngIcon>
         </Title>
-        {/* <HeaderLinks>
-          <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
+        <HeaderLinks>
+          {/* <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
             {t('header.swap')}
           </StyledNavLink>
           <StyledNavLink id={`swap-nav-link`} to={'/buy'}>
@@ -372,14 +371,32 @@ export default function Header() {
             isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/stake')}
           >
             {t('header.stake')}
-          </StyledNavLink>
-          <StyledExternalLink id={`vote-nav-link`} href={'https://pro.olympusdao.finance/'}>
-            Bond <span style={{ fontSize: '11px' }}>↗</span>
+          </StyledNavLink> */}
+          <StyledExternalLink id={`vote-nav-link`} href={'https://mint.dexdaddy.com/#/app/dashboard'}>
+            Mint
           </StyledExternalLink>
           <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
-            {t('header.charts')} <span style={{ fontSize: '11px' }}>↗</span>
+            Marketplace
           </StyledExternalLink>
-        </HeaderLinks> */}
+          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+            Launchpad
+          </StyledExternalLink>
+          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+            Dex
+          </StyledExternalLink>
+          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+            Farm
+          </StyledExternalLink>
+          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+            Sale Events
+          </StyledExternalLink>
+          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+            Metaverse
+          </StyledExternalLink>
+          <StyledExternalLink id={`info-nav-link`} href={ANALYTICS_PAGE}>
+            Games
+          </StyledExternalLink>
+        </HeaderLinks>
       </HeaderRow>
       <HeaderControls>
         <HeaderElement>
@@ -402,10 +419,10 @@ export default function Header() {
             )}
           </Hidden>
           {aggregateBalance && (
-            <PNGWrapper onClick={() => setShowPngBalanceModal(true)}>
+            <PNGWrapper onClick={() => setShowPngBalanceModal(false)}>
               <PNGAmount active={!!account} style={{ pointerEvents: 'auto' }}>
                 {account && (
-                  <Hidden upToSmall={true}>
+                  <Hidden upToSmall={false}>
                     <TYPE.white
                       style={{
                         paddingRight: '.4rem'
@@ -422,7 +439,7 @@ export default function Header() {
                     </TYPE.white>
                   </Hidden>
                 )}
-                PNG
+                DADDY
               </PNGAmount>
               <CardNoise />
             </PNGWrapper>
@@ -436,11 +453,11 @@ export default function Header() {
             <Web3Status />
           </AccountElement>
         </HeaderElement>
-        {/* <HeaderElementWrap>
-          <Settings />
-          <LanguageSelection />
+        <HeaderElementWrap>
+          {/* <Settings />
+          <LanguageSelection /> */}
           <Menu />
-        </HeaderElementWrap> */}
+        </HeaderElementWrap>
       </HeaderControls>
     </HeaderFrame>
   )

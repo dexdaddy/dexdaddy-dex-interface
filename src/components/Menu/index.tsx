@@ -1,5 +1,17 @@
 import React, { useRef } from 'react'
-import { MessageCircle, Send, Info, Twitter, GitHub, Book, Calendar, MessageSquare, CheckSquare } from 'react-feather'
+import {
+  Send,
+  Info,
+  Twitter,
+  Book,
+  MessageSquare,
+  Lock,
+  Edit2,
+  Copy,
+  Facebook,
+  Instagram,
+  Youtube
+} from 'react-feather'
 import styled from 'styled-components'
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
 import { LANDING_PAGE } from '../../constants'
@@ -42,41 +54,57 @@ export default function Menu() {
 
       {open && (
         <NarrowMenuFlyout>
-          <MenuItem id="link" href={LANDING_PAGE}>
+          <MenuItem style={{ fontSize: 14 }} id="link" href="https://www.dexdaddy.com/dexdaddy/about">
             <Info size={14} />
-            {t('menu.about')}
+            About
           </MenuItem>
-          <MenuNavItem id="link" to={'/IDO'}>
-            <Calendar size={14} />
-            {t('menu.idos')}
-          </MenuNavItem>
-          <MenuItem id="link" href={TutorialPage}>
+          <MenuItem style={{ fontSize: 14 }} id="link" href="https://www.dexdaddy.com/dexdaddy/disclaimer">
+            <Edit2 size={14} />
+            Disclaimer
+          </MenuItem>
+          <MenuItem style={{ fontSize: 14 }} id="link" href="https://www.dexdaddy.com/dexdaddy/terms">
             <Book size={14} />
-            {t('menu.tutorials')}
+            Terms of Use
           </MenuItem>
-          <MenuItem id="link" href="https://t.me/pangolindexV2">
-            <Send size={14} />
-            {t('menu.telegram')}
+          <MenuItem style={{ fontSize: 14 }} id="link" href="https://www.certik.com/projects/dexdaddy">
+            <Lock size={14} />
+            Audit
           </MenuItem>
-          <MenuItem id="link" href="https://discord.com/invite/pangolindex">
-            <MessageCircle size={14} />
-            {t('menu.discord')}
-          </MenuItem>
-          <MenuItem id="link" href="https://gov.pangolin.exchange">
+          <MenuItem
+            style={{ fontSize: 14 }}
+            id="link"
+            href="https://snowtrace.io/token/0x36a850f4a0afe7461fec0380fcc0f6458e20d551"
+          >
             <MessageSquare size={14} />
-            {t('header.forum')}
+            Contract
           </MenuItem>
-          <MenuNavItem id="link" to={'/vote'}>
-            <CheckSquare size={14} />
-            {t('header.vote')}
-          </MenuNavItem>
-          <MenuItem id="link" href="https://twitter.com/pangolindex">
+          <MenuItem
+            style={{ fontSize: 14 }}
+            id="link"
+            href="https://dexdaddypublicdocuments.s3.ap-south-1.amazonaws.com/dexDaddyWP.pdf"
+          >
+            <Copy size={14} />
+            Whitepaper
+          </MenuItem>
+          <MenuItem style={{ fontSize: 14 }} id="link" href="https://twitter.com/DexDaddyDeFi">
             <Twitter size={14} />
-            {t('menu.twitter')}
+            Twitter
           </MenuItem>
-          <MenuItem id="link" href="https://github.com/pangolindex">
-            <GitHub size={14} />
-            {t('menu.code')}
+          <MenuItem style={{ fontSize: 14 }} id="link" href="https://t.me/DexDaddyOfficialGroup">
+            <Send size={14} />
+            Telegram
+          </MenuItem>
+          <MenuItem style={{ fontSize: 14 }} id="link" href="https://www.facebook.com/DexDaddyOfficial">
+            <Facebook size={14} />
+            Facebook
+          </MenuItem>{' '}
+          <MenuItem style={{ fontSize: 14 }} id="link" href="https://www.instagram.com/dexdaddyofficial/">
+            <Instagram size={14} />
+            Instagram
+          </MenuItem>{' '}
+          <MenuItem style={{ fontSize: 14 }} id="link" href="https://www.youtube.com/channel/UCOtk9Ke9QYZn6tw9gVF3eVQ">
+            <Youtube size={14} />
+            Youtube
           </MenuItem>
         </NarrowMenuFlyout>
       )}
