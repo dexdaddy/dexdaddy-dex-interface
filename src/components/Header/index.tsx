@@ -331,7 +331,7 @@ export default function Header() {
           </StyledNavLink>
           <StyledNavLink id={`swap-nav-link`} to={'/buy'}>
             {t('header.buy')}
-          </StyledNavLink>
+          </StyledNavLink> */}
           <StyledNavLink
             id={`pool-nav-link`}
             to={'/pool'}
@@ -345,6 +345,7 @@ export default function Header() {
           >
             {t('header.pool')}
           </StyledNavLink>
+          {/*
 
           <StyledLink
             id={`png-nav-link`}

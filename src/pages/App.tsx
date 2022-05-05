@@ -12,6 +12,11 @@ import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 import { useIsBetaUI } from '../hooks/useLocation'
 import Swap from './Swap'
 import { RedirectToSwap } from './Swap/redirects'
+import Pool from './Pool'
+import { RedirectDuplicateTokenIds, RedirectOldAddLiquidityPathStructure } from './AddLiquidity/redirects'
+import AddLiquidity from './AddLiquidity'
+import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redirects'
+import RemoveLiquidity from './RemoveLiquidity'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -71,6 +76,14 @@ export default function App() {
           <Polling />
           <Web3ReactManager>
             <Switch>
+              <Route exact path="/add/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
+              <Route exact path="/add/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
+              <Route exact path="/create" component={AddLiquidity} />
+              <Route exact path="/create/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
+              <Route exact path="/create/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
+              <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
+              <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+              <Route exact strict path="/pool" component={Pool} />
               <Route exact strict path="/" component={Swap} />
               <Route exact strict path="/:outputCurrency" component={RedirectToSwap} />
             </Switch>
