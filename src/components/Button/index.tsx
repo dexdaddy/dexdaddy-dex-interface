@@ -67,8 +67,8 @@ export const ButtonPrimary = styled(Base)<{ isBeta?: boolean }>`
 `
 
 export const ButtonLight = styled(Base)`
-  background-color: ${({ theme }) => theme.primary5};
-  color: ${({ theme }) => theme.primaryText1};
+  background: linear-gradient(180deg, rgba(37, 153, 250, 0.62) 0%, rgba(67, 227, 224, 0.62) 100%);
+  color: #fff;
   font-size: 16px;
   font-weight: 500;
   &:focus {
