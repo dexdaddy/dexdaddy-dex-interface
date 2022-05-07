@@ -462,7 +462,8 @@ export default function Header() {
                     'https://raw.githubusercontent.com/dexdaddy/tokens/main/assets/0x36A850f4A0aFE7461FeC0380fcc0f6458e20D551/logo.png'
                   }
                 />{' '}
-                Add to Metamask
+                <span className="addMetamask">Add to </span>{' '}
+                <img height="20px" width="20px" src={'https://www.dexdaddy.com/wallet.png'} />
               </PNGAmount>
               <CardNoise />
             </PNGWrapper>
