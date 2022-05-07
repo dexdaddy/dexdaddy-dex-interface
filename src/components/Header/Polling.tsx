@@ -10,6 +10,7 @@ const StyledPolling = styled.div`
   display: flex;
   right: 0;
   bottom: 0;
+  margin-right: 40px;
   padding: 1rem;
   color: white;
   transition: opacity 0.25s ease;
@@ -87,6 +88,9 @@ export default function Polling() {
       <StyledPolling>
         <TYPE.small style={{ opacity: isMounted ? '0.2' : '0.6' }}>{blockNumber}</TYPE.small>
         <StyledPollingDot>{!isMounted && <Spinner />}</StyledPollingDot>
+      </StyledPolling>
+      <StyledPolling>
+        <p style={{ color: '#f05629' }}>Supported by Pangolin</p>
       </StyledPolling>
     </ExternalLink>
   )
