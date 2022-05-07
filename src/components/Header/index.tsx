@@ -137,7 +137,7 @@ const PNGAmount = styled(AccountElement)`
   height: 36px;
   font-weight: 500;
   background-color: ${({ theme }) => theme.bg3};
-  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #22aaa3 0%, #12729a 100%), #edeef2;
+  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #1a3647 0%, #1e3c47 100%), #edeef2;
 `
 
 const PNGWrapper = styled.span`
@@ -293,6 +293,39 @@ const NETWORK_CURRENCY: { [chainId in ChainId]?: string } = {
 }
 
 export default function Header() {
+  const addDaddyToWallet = async () => {
+    const tokenAddress = '0x36A850f4A0aFE7461FeC0380fcc0f6458e20D551'
+    const tokenSymbol = 'DADDY'
+    const tokenDecimals = 18
+    const tokenImage =
+      'https://raw.githubusercontent.com/dexdaddy/tokens/main/assets/0x36A850f4A0aFE7461FeC0380fcc0f6458e20D551/logo.png'
+
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      //@ts-ignore
+      const wasAdded = await ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20', // Initially only supports ERC20, but eventually more!
+          options: {
+            address: tokenAddress, // The address that the token is at.
+            symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
+            decimals: tokenDecimals, // The number of decimals in the token
+            image: tokenImage // A string url of the token logo
+          }
+        }
+      })
+
+      if (wasAdded) {
+        console.log('Thanks for your interest!')
+      } else {
+        console.log('Your loss!')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const { account } = useActiveWeb3React()
   const chainId = useChainId()
 
@@ -420,27 +453,16 @@ export default function Header() {
             )}
           </Hidden>
           {aggregateBalance && (
-            <PNGWrapper onClick={() => setShowPngBalanceModal(false)}>
+            <PNGWrapper onClick={() => addDaddyToWallet()}>
               <PNGAmount active={!!account} style={{ pointerEvents: 'auto' }}>
-                {account && (
-                  <Hidden upToSmall={false}>
-                    <TYPE.white
-                      style={{
-                        paddingRight: '.4rem'
-                      }}
-                    >
-                      <CountUp
-                        key={countUpValue}
-                        isCounting
-                        start={parseFloat(countUpValuePrevious)}
-                        end={parseFloat(countUpValue)}
-                        thousandsSeparator={','}
-                        duration={1}
-                      />
-                    </TYPE.white>
-                  </Hidden>
-                )}
-                DADDY
+                <img
+                  height="20px"
+                  width="20px"
+                  src={
+                    'https://raw.githubusercontent.com/dexdaddy/tokens/main/assets/0x36A850f4A0aFE7461FeC0380fcc0f6458e20D551/logo.png'
+                  }
+                />{' '}
+                Add to Metamask
               </PNGAmount>
               <CardNoise />
             </PNGWrapper>
