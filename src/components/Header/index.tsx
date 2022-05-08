@@ -359,9 +359,9 @@ export default function Header() {
         <PngBalanceContent setShowPngBalanceModal={setShowPngBalanceModal} />
       </Modal>
       <HeaderRow>
-        <Title href=".">
+        <Title href="https://dexdaddy.com/">
           <PngIcon>
-            <img width={'24px'} src={isDark ? LogoDark : Logo} alt="logo" />
+            <img width={'120px'} src="https://www.dexdaddy.com/_next/static/media/logo.d9d95698.svg" alt="logo" />
           </PngIcon>
         </Title>
         <HeaderLinks>
