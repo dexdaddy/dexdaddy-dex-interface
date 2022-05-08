@@ -98,6 +98,12 @@ const HeaderElementWrap = styled.div`
   display: flex;
   align-items: center;
 `
+const SpanPadding = styled.span`
+  padding: 5px 5px;
+`
+const DexdaddyLogo = styled.img`
+  display: block;
+`
 
 const HeaderRow = styled(RowFixed)`
   ${({ theme }) => theme.mediaWidth.upToMedium`
@@ -455,15 +461,21 @@ export default function Header() {
           {aggregateBalance && (
             <PNGWrapper onClick={() => addDaddyToWallet()}>
               <PNGAmount active={!!account} style={{ pointerEvents: 'auto' }}>
-                <img
-                  height="20px"
-                  width="20px"
-                  src={
-                    'https://raw.githubusercontent.com/dexdaddy/tokens/main/assets/0x36A850f4A0aFE7461FeC0380fcc0f6458e20D551/logo.png'
-                  }
-                />{' '}
-                <span className="addMetamask">Add to </span>{' '}
-                <img height="20px" width="20px" src={'https://www.dexdaddy.com/wallet.png'} />
+                <SpanPadding>
+                  {' '}
+                  <DexdaddyLogo
+                    height="20px"
+                    width="20px"
+                    src={
+                      'https://raw.githubusercontent.com/dexdaddy/tokens/main/assets/0x36A850f4A0aFE7461FeC0380fcc0f6458e20D551/logo.png'
+                    }
+                  />{' '}
+                </SpanPadding>
+                <SpanPadding>Add to</SpanPadding>
+                <SpanPadding>
+                  {' '}
+                  <DexdaddyLogo height="20px" width="20px" src={'https://www.dexdaddy.com/wallet.png'} />
+                </SpanPadding>
               </PNGAmount>
               <CardNoise />
             </PNGWrapper>
