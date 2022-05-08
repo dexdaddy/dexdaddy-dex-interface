@@ -13,10 +13,15 @@ import { useIsBetaUI } from '../hooks/useLocation'
 import Swap from './Swap'
 import { RedirectToSwap } from './Swap/redirects'
 import Pool from './Pool'
-import { RedirectDuplicateTokenIds, RedirectOldAddLiquidityPathStructure } from './AddLiquidity/redirects'
+import {
+  RedirectDuplicateTokenIds,
+  RedirectOldAddLiquidityPathStructure,
+  RedirectToAddLiquidity
+} from './AddLiquidity/redirects'
 import AddLiquidity from './AddLiquidity'
 import { RedirectOldRemoveLiquidityPathStructure } from './RemoveLiquidity/redirects'
 import RemoveLiquidity from './RemoveLiquidity'
+import PoolFinder from './PoolFinder'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -84,6 +89,8 @@ export default function App() {
               <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
               <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
               <Route exact strict path="/pool" component={Pool} />
+              <Route exact strict path="/create" component={RedirectToAddLiquidity} />
+              <Route exact strict path="/find" component={PoolFinder} />
               <Route exact strict path="/" component={Swap} />
               <Route exact strict path="/:outputCurrency" component={RedirectToSwap} />
             </Switch>
