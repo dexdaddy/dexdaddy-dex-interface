@@ -10,7 +10,7 @@ const StyledInput = styled.input<{ error?: boolean; fontSize?: string; align?: s
   outline: none;
   border: none;
   flex: 1 1 auto;
-  background-image: linear-gradient(to right, rgb(29 59 76), rgb(25 52 69), rgb(19 40 57));
+  background: none;
   font-size: ${({ fontSize }) => fontSize ?? '24px'};
   text-align: ${({ align }) => align && align};
   white-space: nowrap;
