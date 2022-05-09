@@ -80,3 +80,17 @@ export const MenuNavItem = styled(NavLink)`
     margin-right: 8px;
   }
 `
+export const MenuNavItemV2 = styled.a`
+  flex: 1;
+  padding: 0.5rem 0.5rem;
+  color: ${({ theme }) => theme.text2};
+  text-decoration: none;
+  :hover {
+    color: ${({ theme }) => theme.text1};
+    cursor: pointer;
+    text-decoration: none;
+  }
+  > svg {
+    margin-right: 8px;
+  }
+`

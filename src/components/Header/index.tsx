@@ -28,11 +28,12 @@ import { ANALYTICS_PAGE } from '../../constants'
 import LanguageSelection from '../LanguageSelection'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useToggleModal } from '../../state/application/hooks'
-import { MenuFlyout, MenuNavItem } from '../StyledMenu'
+import { MenuFlyout, MenuNavItem, MenuNavItemV2 } from '../StyledMenu'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { BETA_MENU_LINK } from 'src/constants'
 import { Hidden } from 'src/theme'
 import { useChainId } from 'src/hooks'
+import { isMobile } from 'react-device-detect'
 
 const HeaderFrame = styled.div`
   display: grid;
@@ -365,9 +366,10 @@ export default function Header() {
           </PngIcon>
         </Title>
         <HeaderLinks>
-          {/* <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
+          <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
             {t('header.swap')}
           </StyledNavLink>
+          {/*
           <StyledNavLink id={`swap-nav-link`} to={'/buy'}>
             {t('header.buy')}
           </StyledNavLink> */}
@@ -384,27 +386,39 @@ export default function Header() {
           >
             {t('header.pool')}
           </StyledNavLink>
+
+          {isMobile && (
+            <StyledLink
+              id={`png-nav-link`}
+              onClick={toggle}
+              isActive={location?.pathname?.startsWith('/png')}
+              ref={node as any}
+            >
+              {'Menu'} <ChevronDown size={24} />
+              {open && (
+                <NarrowMenuFlyout>
+                  <MenuNavItemV2 id="link" target="_blank" rel="" href="https://mint.dexdaddy.com">
+                    {'Mint'}
+                  </MenuNavItemV2>
+                  <MenuNavItemV2 id="link" target="_blank" rel="" href="https://marketplace.dexdaddy.com">
+                    {'Marketplace'}
+                  </MenuNavItemV2>
+                  <MenuNavItemV2 id="link" target="_blank" rel="" href="https://launchpad.dexdaddy.com">
+                    {'Launchpad'}
+                  </MenuNavItemV2>
+                  <MenuNavItemV2 id="link" target="_blank" rel="" href="https://farm.dexdaddy.com">
+                    {'Farm'}
+                  </MenuNavItemV2>
+                  <MenuNavItemV2 id="link" target="_blank" rel="" href="https://sale.dexdaddy.com">
+                    {'Sale Events'}
+                  </MenuNavItemV2>
+                  <MenuNavItemV2 id="link">{'Metaverse'}</MenuNavItemV2>
+                  <MenuNavItemV2 id="link">{'Games'}</MenuNavItemV2>
+                </NarrowMenuFlyout>
+              )}
+            </StyledLink>
+          )}
           {/*
-
-          <StyledLink
-            id={`png-nav-link`}
-            onClick={toggle}
-            isActive={location?.pathname?.startsWith('/png')}
-            ref={node as any}
-          >
-            {t('header.farm')} <ChevronDown size={24} />
-            {open && (
-              <NarrowMenuFlyout>
-                <MenuNavItem id="link" to={'/png/1'}>
-                  {t('header.version1')}
-                </MenuNavItem>
-                <MenuNavItem id="link" to={'/png/2'}>
-                  {t('header.version2')}
-                </MenuNavItem>
-              </NarrowMenuFlyout>
-            )}
-          </StyledLink>
-
           <StyledNavLink
             id={`stake-nav-link`}
             to={'/stake/0'}

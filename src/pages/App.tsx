@@ -81,6 +81,8 @@ export default function App() {
           <Polling />
           <Web3ReactManager>
             <Switch>
+              <Route exact strict path="/swap" component={Swap} />
+              <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
               <Route exact path="/add/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
               <Route exact path="/add/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
               <Route exact path="/create" component={AddLiquidity} />
