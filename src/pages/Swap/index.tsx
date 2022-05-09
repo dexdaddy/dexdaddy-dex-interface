@@ -553,8 +553,8 @@ export default function Swap() {
       </AppBody>
 
       <AdvancedSwapDetailsDropdown trade={trade} />
-      {/* 
-      <BottomText>
+
+      {/* <BottomText>
         <AutoRow>
           <Trans i18nKey="swapPage.marginSwap">
             Trade with leverage on
