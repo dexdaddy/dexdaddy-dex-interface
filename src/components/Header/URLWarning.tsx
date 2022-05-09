@@ -11,7 +11,7 @@ import { BETA_MENU_LINK } from 'src/constants'
 const PhishAlert = styled.div<{ isActive: any }>`
   width: 100%;
   padding: 6px 6px;
-  background-color: ${({ theme }) => theme.blue1};
+  background-color: linear-gradient(to right, rgb(37 139 211), rgb(56 192 201));
   color: white;
   font-size: 11px;
   justify-content: space-between;
