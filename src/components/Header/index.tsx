@@ -287,6 +287,17 @@ const NarrowMenuFlyout = styled(MenuFlyout)`
   right: auto !important;
 `
 
+const NarrowMenuEarn = styled(MenuFlyout)`
+  min-width: 8.125rem;
+  left: 21rem;
+  right: auto !important;
+`
+const NarrowMenuNft = styled(MenuFlyout)`
+  min-width: 8.125rem;
+  left: 33rem;
+  right: auto !important;
+`
+
 const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
   [ChainId.FUJI]: 'Fuji',
   [ChainId.AVALANCHE]: 'Avalanche',
@@ -349,10 +360,31 @@ export default function Header() {
 
   const countUpValue = aggregateBalance?.toFixed(0) ?? '0'
   const countUpValuePrevious = usePrevious(countUpValue) ?? '0'
-  const node = useRef<HTMLDivElement>()
-  const open = useModalOpen(ApplicationModal.FARM)
-  const toggle = useToggleModal(ApplicationModal.FARM)
-  useOnClickOutside(node, open ? toggle : undefined)
+  // const node = useRef<HTMLDivElement>()
+  // const open = useModalOpen(ApplicationModal.DEX)
+  // const toggle = useToggleModal(ApplicationModal.FARM)
+  // useOnClickOutside(node, open ? toggle : undefined)
+  const nodeDEX = useRef<HTMLDivElement>()
+  const openDEX = useModalOpen(ApplicationModal.DEX)
+  const toggleDex = useToggleModal(ApplicationModal.DEX)
+  useOnClickOutside(nodeDEX, openDEX ? toggleDex : undefined)
+
+  const nodeMOBILE_MENU = useRef<HTMLDivElement>()
+  const openMOBILE_MENU = useModalOpen(ApplicationModal.MOBILE_MENU)
+  const toggleMobile = useToggleModal(ApplicationModal.MOBILE_MENU)
+  useOnClickOutside(nodeMOBILE_MENU, openMOBILE_MENU ? toggleMobile : undefined)
+
+  const nodeEARN = useRef<HTMLDivElement>()
+  const openEARN = useModalOpen(ApplicationModal.EARN)
+  const toggleEarn = useToggleModal(ApplicationModal.EARN)
+  useOnClickOutside(nodeEARN, openEARN ? toggleEarn : undefined)
+
+  const nodeNFT = useRef<HTMLDivElement>()
+  const openNFT = useModalOpen(ApplicationModal.NFT)
+  const toggleNFT = useToggleModal(ApplicationModal.NFT)
+  useOnClickOutside(nodeNFT, openNFT ? toggleNFT : undefined)
+  // const toggleNFT = useToggleModal(ApplicationModal.NFT)
+  // useOnClickOutside(node, open ? toggleNFT : undefined)
 
   return (
     <HeaderFrame>
@@ -373,7 +405,7 @@ export default function Header() {
           <StyledNavLink id={`swap-nav-link`} to={'/buy'}>
             {t('header.buy')}
           </StyledNavLink> */}
-          <StyledNavLink
+          {/* <StyledNavLink
             id={`pool-nav-link`}
             to={'/pool'}
             isActive={(match, { pathname }) =>
@@ -385,17 +417,17 @@ export default function Header() {
             }
           >
             {t('header.pool')}
-          </StyledNavLink>
+          </StyledNavLink> */}
 
           {isMobile && (
             <StyledLink
-              id={`png-nav-link`}
-              onClick={toggle}
+              id={`MOBILE_MENU`}
+              onClick={toggleMobile}
               isActive={location?.pathname?.startsWith('/png')}
-              ref={node as any}
+              ref={nodeMOBILE_MENU as any}
             >
               {'Menu'} <ChevronDown size={24} />
-              {open && (
+              {openMOBILE_MENU && (
                 <NarrowMenuFlyout>
                   <MenuNavItemV2 id="link" target="_blank" rel="" href="https://mint.dexdaddy.com">
                     {'Mint'}
@@ -426,22 +458,97 @@ export default function Header() {
           >
             {t('header.stake')}
           </StyledNavLink> */}
-          <StyledExternalLink id={`vote-nav-link`} href={''}>
+          {/* DEX */}
+          {!isMobile && (
+            <StyledLink
+              id={`DEX`}
+              onClick={toggleDex}
+              isActive={location?.pathname?.startsWith('/swap')}
+              ref={nodeDEX as any}
+            >
+              {'Dex'} <ChevronDown size={24} />
+              {openDEX && (
+                <NarrowMenuFlyout>
+                  <StyledNavLink
+                    id={`stake-nav-link`}
+                    to={'/swap'}
+                    isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/swap')}
+                  >
+                    {'Swap'}
+                  </StyledNavLink>
+                  <StyledNavLink
+                    id={`stake-nav-link`}
+                    to={'/pool'}
+                    isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/pool')}
+                  >
+                    {'Liquidity'}
+                  </StyledNavLink>
+                </NarrowMenuFlyout>
+              )}
+            </StyledLink>
+          )}
+          {!isMobile && (
+            <StyledLink
+              id={`EARN`}
+              onClick={toggleEarn}
+              isActive={location?.pathname?.startsWith('/pool')}
+              ref={nodeEARN as any}
+            >
+              {'Earn'} <ChevronDown size={24} />
+              {openEARN && (
+                <NarrowMenuEarn>
+                  <StyledNavLink
+                    id={`stake-nav-link`}
+                    to={'/pool'}
+                    isActive={(match, { pathname }) => Boolean(match) || pathname.startsWith('/pool')}
+                  >
+                    {'Pool'}
+                  </StyledNavLink>
+                </NarrowMenuEarn>
+              )}
+            </StyledLink>
+          )}
+          {!isMobile && (
+            <StyledExternalLink id={`info-nav-link`} href={`https://sale.dexdaddy.com`}>
+              Sale Events
+            </StyledExternalLink>
+          )}
+          {!isMobile && (
+            <StyledLink
+              id={`NFT`}
+              onClick={toggleNFT}
+              isActive={location?.pathname?.startsWith('/png')}
+              ref={nodeNFT as any}
+            >
+              {'NFT'} <ChevronDown size={24} />
+              {openNFT && (
+                <NarrowMenuNft>
+                  <StyledExternalLink id={`info-nav-link`} href={`https://mint.dexdaddy.com`}>
+                    Mint
+                  </StyledExternalLink>
+                  <StyledExternalLink id={`info-nav-link`} href={`https://marketplace.dexdaddy.com`}>
+                    Marketplace
+                  </StyledExternalLink>
+                </NarrowMenuNft>
+              )}
+            </StyledLink>
+          )}
+          {/* <StyledExternalLink id={`vote-nav-link`} href={'https://mint.dexdaddy.com'}>
             Mint
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={``}>
+          <StyledExternalLink id={`info-nav-link`} href={`https://marketplace.dexdaddy.com`}>
             Marketplace
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={``}>
+          <StyledExternalLink id={`info-nav-link`} href={`https://launchpad.dexdaddy.com`}>
             Launchpad
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={``}>
+          <StyledExternalLink id={`info-nav-link`} href={`https://dex.dexdaddy.com`}>
             Dex
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={``}>
+          <StyledExternalLink id={`info-nav-link`} href={`https://farm.dexdaddy.com`}>
             Farm
           </StyledExternalLink>
-          <StyledExternalLink id={`info-nav-link`} href={``}>
+          <StyledExternalLink id={`info-nav-link`} href={`https://sale.dexdaddy.com`}>
             Sale Events
           </StyledExternalLink>
           <StyledExternalLink id={`info-nav-link`} href={``}>
@@ -449,7 +556,7 @@ export default function Header() {
           </StyledExternalLink>
           <StyledExternalLink id={`info-nav-link`} href={``}>
             Games
-          </StyledExternalLink>
+          </StyledExternalLink> */}
         </HeaderLinks>
       </HeaderRow>
       <HeaderControls>
