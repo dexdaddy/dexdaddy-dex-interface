@@ -297,6 +297,16 @@ const NarrowMenuNft = styled(MenuFlyout)`
   left: 33rem;
   right: auto !important;
 `
+const NarrowMenuWin = styled(MenuFlyout)`
+  min-width: 8.125rem;
+  left: 38rem;
+  right: auto !important;
+`
+const NarrowMenuApp = styled(MenuFlyout)`
+  min-width: 8.125rem;
+  left: 43rem;
+  right: auto !important;
+`
 
 const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
   [ChainId.FUJI]: 'Fuji',
@@ -383,8 +393,16 @@ export default function Header() {
   const openNFT = useModalOpen(ApplicationModal.NFT)
   const toggleNFT = useToggleModal(ApplicationModal.NFT)
   useOnClickOutside(nodeNFT, openNFT ? toggleNFT : undefined)
-  // const toggleNFT = useToggleModal(ApplicationModal.NFT)
-  // useOnClickOutside(node, open ? toggleNFT : undefined)
+
+  const nodeWIN = useRef<HTMLDivElement>()
+  const openWIN = useModalOpen(ApplicationModal.WIN)
+  const toggleWIN = useToggleModal(ApplicationModal.WIN)
+  useOnClickOutside(nodeWIN, openWIN ? toggleNFT : undefined)
+
+  const nodeAPP = useRef<HTMLDivElement>()
+  const openAPP = useModalOpen(ApplicationModal.APP)
+  const toggleAPP = useToggleModal(ApplicationModal.APP)
+  useOnClickOutside(nodeAPP, openAPP ? toggleNFT : undefined)
 
   return (
     <HeaderFrame>
@@ -418,7 +436,6 @@ export default function Header() {
           >
             {t('header.pool')}
           </StyledNavLink> */}
-
           {isMobile && (
             <StyledLink
               id={`MOBILE_MENU`}
@@ -487,6 +504,7 @@ export default function Header() {
               )}
             </StyledLink>
           )}
+          {/* EARN */}
           {!isMobile && (
             <StyledLink
               id={`EARN`}
@@ -497,6 +515,9 @@ export default function Header() {
               {'Earn'} <ChevronDown size={24} />
               {openEARN && (
                 <NarrowMenuEarn>
+                  <StyledExternalLink id={`info-nav-link`} href={`https://farm.dexdaddy.com`}>
+                    Farm
+                  </StyledExternalLink>
                   <StyledNavLink
                     id={`stake-nav-link`}
                     to={'/pool'}
@@ -510,9 +531,10 @@ export default function Header() {
           )}
           {!isMobile && (
             <StyledExternalLink id={`info-nav-link`} href={`https://sale.dexdaddy.com`}>
-              Sale Events
+              Token Sale
             </StyledExternalLink>
           )}
+          {/* NFT */}
           {!isMobile && (
             <StyledLink
               id={`NFT`}
@@ -530,6 +552,52 @@ export default function Header() {
                     Marketplace
                   </StyledExternalLink>
                 </NarrowMenuNft>
+              )}
+            </StyledLink>
+          )}
+          {/* WIN */}
+          {!isMobile && (
+            <StyledLink
+              id={`WIN`}
+              onClick={toggleWIN}
+              isActive={location?.pathname?.startsWith('/png')}
+              ref={nodeWIN as any}
+            >
+              {'Win'} <ChevronDown size={24} />
+              {openWIN && (
+                <NarrowMenuWin>
+                  <StyledExternalLink id={`info-nav-link`} href={`#`}>
+                    Prediction
+                  </StyledExternalLink>
+                  <StyledExternalLink id={`info-nav-link`} href={`#`}>
+                    Lottery
+                  </StyledExternalLink>
+                  <StyledExternalLink id={`info-nav-link`} href={`#`}>
+                    Crash Game
+                  </StyledExternalLink>
+                </NarrowMenuWin>
+              )}
+            </StyledLink>
+          )}
+
+          {/* // APP */}
+          {!isMobile && (
+            <StyledLink
+              id={`APP`}
+              onClick={toggleAPP}
+              isActive={location?.pathname?.startsWith('/png')}
+              ref={nodeAPP as any}
+            >
+              {'App'} <ChevronDown size={24} />
+              {openAPP && (
+                <NarrowMenuApp>
+                  <StyledExternalLink id={`info-nav-link`} href={`https://launchpad.dexdaddy.com`}>
+                    Launchpad
+                  </StyledExternalLink>
+                  <StyledExternalLink id={`info-nav-link`} href={`#`}>
+                    MetaVerse
+                  </StyledExternalLink>
+                </NarrowMenuApp>
               )}
             </StyledLink>
           )}

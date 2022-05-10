@@ -38,7 +38,8 @@ export enum ApplicationModal {
   EARN,
   NFT,
   WIN,
-  MOBILE_MENU
+  MOBILE_MENU,
+  APP
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')
