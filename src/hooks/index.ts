@@ -1,11 +1,10 @@
 import { Web3Provider } from '@ethersproject/providers'
-import { ChainId } from '@pangolindex/sdk'
+import { ChainId, ALL_CHAINS } from '@pangolindex/sdk'
 import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
 import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
 import { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import { gnosisSafe, injected, xDefi } from '../connectors'
-import { IS_IN_IFRAME, NetworkContextName } from '../constants'
+import { gnosisSafe, injected, xDefi, IS_IN_IFRAME, NetworkContextName } from '@pangolindex/components'
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & { chainId?: ChainId } {
   const context = useWeb3ReactCore<Web3Provider>()
@@ -21,7 +20,7 @@ export function useEagerConnect() {
   useEffect(() => {
     const eagerConnect = async () => {
       if (!triedSafe) {
-        gnosisSafe.isSafeApp().then(loadedInSafe => {
+        gnosisSafe.isSafeApp().then((loadedInSafe: any) => {
           if (loadedInSafe) {
             activate(gnosisSafe, undefined, true).catch(() => {
               setTriedSafe(true)
@@ -35,7 +34,7 @@ export function useEagerConnect() {
 
         const existingConnector = isMetaMask ? injected : xDefi
 
-        existingConnector.isAuthorized().then(isAuthorized => {
+        existingConnector.isAuthorized().then((isAuthorized: any) => {
           if (isAuthorized) {
             activate(existingConnector, undefined, true).catch(() => {
               setTried(true)
@@ -80,16 +79,16 @@ export function useInactiveListener(suppress = false) {
     if (ethereum && ethereum.on && !active && !error && !suppress) {
       const handleChainChanged = () => {
         // eat errors
-        activate(injected, undefined, true).catch(error => {
-          console.error('Failed to activate after chain changed', error)
+        activate(injected, undefined, true).catch(_error => {
+          console.error('Failed to activate after chain changed', _error)
         })
       }
 
       const handleAccountsChanged = (accounts: string[]) => {
         if (accounts.length > 0) {
           // eat errors
-          activate(injected, undefined, true).catch(error => {
-            console.error('Failed to activate after accounts changed', error)
+          activate(injected, undefined, true).catch(_error => {
+            console.error('Failed to activate after accounts changed', _error)
           })
         }
       }
@@ -111,4 +110,8 @@ export function useInactiveListener(suppress = false) {
 export const useChainId = () => {
   const { chainId } = useActiveWeb3React()
   return chainId || ChainId.AVALANCHE
+}
+
+export const useChain = (chainId: number) => {
+  return ALL_CHAINS.filter(chain => chain.chain_id === chainId)[0]
 }

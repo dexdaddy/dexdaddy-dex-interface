@@ -1,7 +1,7 @@
 import { splitSignature } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/providers'
-import { Currency, currencyEquals, CAVAX, Percent, WAVAX, ChainId } from '@pangolindex/sdk'
+import { Currency, currencyEquals, CAVAX, Percent, WAVAX } from '@pangolindex/sdk'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { ArrowDown, Plus } from 'react-feather'
 import ReactGA from 'react-ga'
@@ -20,7 +20,7 @@ import Row, { RowBetween, RowFixed } from '../../components/Row'
 
 import Slider from '../../components/Slider'
 import CurrencyLogo from '../../components/CurrencyLogo'
-import { ROUTER_ADDRESS } from '../../constants'
+import { NETWORK_CURRENCY, NETWORK_WRAPPED_CURRENCY, ROUTER_ADDRESS } from '../../constants'
 import { useActiveWeb3React, useChainId } from '../../hooks'
 import { useCurrency } from '../../hooks/Tokens'
 import { usePairContract } from '../../hooks/useContract'
@@ -172,9 +172,9 @@ export default function RemoveLiquidity({
           deadline: deadline.toNumber()
         })
       })
-      .catch(error => {
+      .catch(err => {
         // for all errors other than 4001 (EIP-1193 user rejected request), fall back to manual approve
-        if (error?.code !== 4001) {
+        if (err?.code !== 4001) {
           approveCallback()
         }
       })
@@ -182,20 +182,20 @@ export default function RemoveLiquidity({
 
   // wrapped onUserInput to clear signatures
   const onUserInput = useCallback(
-    (field: Field, typedValue: string) => {
+    (field: Field, _typedValue: string) => {
       setSignatureData(null)
-      return _onUserInput(field, typedValue)
+      return _onUserInput(field, _typedValue)
     },
     [_onUserInput]
   )
 
-  const onLiquidityInput = useCallback((typedValue: string): void => onUserInput(Field.LIQUIDITY, typedValue), [
+  const onLiquidityInput = useCallback((_typedValue: string): void => onUserInput(Field.LIQUIDITY, _typedValue), [
     onUserInput
   ])
-  const onCurrencyAInput = useCallback((typedValue: string): void => onUserInput(Field.CURRENCY_A, typedValue), [
+  const onCurrencyAInput = useCallback((_typedValue: string): void => onUserInput(Field.CURRENCY_A, _typedValue), [
     onUserInput
   ])
-  const onCurrencyBInput = useCallback((typedValue: string): void => onUserInput(Field.CURRENCY_B, typedValue), [
+  const onCurrencyBInput = useCallback((_typedValue: string): void => onUserInput(Field.CURRENCY_B, _typedValue), [
     onUserInput
   ])
 
@@ -299,8 +299,8 @@ export default function RemoveLiquidity({
       methodNames.map(methodName =>
         router.estimateGas[methodName](...args)
           .then(calculateGasMargin)
-          .catch(error => {
-            console.error(`estimateGas failed`, methodName, args, error)
+          .catch(err => {
+            console.error(`estimateGas failed`, methodName, args, err)
             return undefined
           })
       )
@@ -346,24 +346,12 @@ export default function RemoveLiquidity({
             label: [currencyA?.symbol, currencyB?.symbol].join('/')
           })
         })
-        .catch((error: Error) => {
+        .catch((err: Error) => {
           setAttemptingTxn(false)
           // we only care if the error is something _other_ than the user rejected the tx
-          console.error(error)
+          console.error(err)
         })
     }
-  }
-
-  const NETWORK_CURRENCY: { [chainId in ChainId]?: string } = {
-    [ChainId.FUJI]: 'AVAX',
-    [ChainId.AVALANCHE]: 'AVAX',
-    [ChainId.WAGMI]: 'WGM'
-  }
-
-  const NETWORK_WRAPPED_CURRENCY: { [chainId in ChainId]?: string } = {
-    [ChainId.FUJI]: 'WAVAX',
-    [ChainId.AVALANCHE]: 'WAVAX',
-    [ChainId.WAGMI]: 'wWAGMI'
   }
 
   function modalHeader() {

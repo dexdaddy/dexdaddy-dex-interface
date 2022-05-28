@@ -1,11 +1,10 @@
 import React from 'react'
 import { Text, Box } from '@pangolindex/components'
-import { JSBI, Pair, TokenAmount, Currency } from '@pangolindex/sdk'
+import { JSBI, Pair, TokenAmount, Currency, CHAINS } from '@pangolindex/sdk'
 import { useTotalSupply } from 'src/data/TotalSupply'
 import numeral from 'numeral'
 import { StateContainer } from './styleds'
 import Stat from 'src/components/Stat'
-import { CHAINS } from 'src/constants/chains'
 import { useChainId } from 'src/hooks'
 
 interface Props {
@@ -21,7 +20,7 @@ export default function StatDetail({ title, totalAmount, pair, pgl, currency0, c
   const chainId = useChainId()
 
   const totalPoolTokens = useTotalSupply(pair?.liquidityToken)
-  pgl = CHAINS[chainId].is_mainnet ? pgl : undefined
+  pgl = CHAINS[chainId].mainnet ? pgl : undefined
 
   const [token0Deposited, token1Deposited] =
     !!pair &&
@@ -50,24 +49,28 @@ export default function StatDetail({ title, totalAmount, pair, pgl, currency0, c
           statFontSize={20}
           titleColor="text2"
         />
-        <Stat
-          title={`Underlying ${currency0?.symbol}`}
-          stat={`${token0Deposited ? numeral(parseFloat(token0Deposited?.toSignificant(6))).format('0.00a') : '-'}`}
-          titlePosition="top"
-          titleFontSize={12}
-          statFontSize={20}
-          titleColor="text2"
-          currency={currency0}
-        />
-        <Stat
-          title={`Underlying ${currency1?.symbol}`}
-          stat={`${token1Deposited ? numeral(parseFloat(token1Deposited?.toSignificant(6))).format('0.00a') : '-'}`}
-          titlePosition="top"
-          titleFontSize={12}
-          statFontSize={20}
-          titleColor="text2"
-          currency={currency1}
-        />
+        {currency0 && (
+          <Stat
+            title={`Underlying ${currency0?.symbol ? currency0?.symbol : ''}`}
+            stat={`${token0Deposited ? numeral(parseFloat(token0Deposited?.toSignificant(6))).format('0.00a') : '-'}`}
+            titlePosition="top"
+            titleFontSize={12}
+            statFontSize={20}
+            titleColor="text2"
+            currency={currency0}
+          />
+        )}
+        {currency1 && (
+          <Stat
+            title={`Underlying ${currency1?.symbol ? currency1?.symbol : ''}`}
+            stat={`${token1Deposited ? numeral(parseFloat(token1Deposited?.toSignificant(6))).format('0.00a') : '-'}`}
+            titlePosition="top"
+            titleFontSize={12}
+            statFontSize={20}
+            titleColor="text2"
+            currency={currency1}
+          />
+        )}
       </StateContainer>
     </Box>
   )
