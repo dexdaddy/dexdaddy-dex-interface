@@ -24,12 +24,8 @@ import { ThemeContext } from 'styled-components'
 import { useIsBetaUI } from './hooks/useLocation'
 import { useActiveWeb3React } from './hooks'
 import Package from '../package.json'
-<<<<<<< HEAD
-//for new commit
-=======
 import { fetchMinichefData } from './state/stake/hooks'
 
->>>>>>> 956046d7b9b0f03b86b69e72554126fa657d95e6
 Sentry.init({
   dsn: 'https://ff9ffce9712f415f8ad4c2a80123c984@o1080468.ingest.sentry.io/6086371',
   integrations: [new Integrations.BrowserTracing()],
@@ -45,7 +41,7 @@ Sentry.init({
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 if ('ethereum' in window) {
-  (window.ethereum as any).autoRefreshOnNetworkChange = false
+  ;(window.ethereum as any).autoRefreshOnNetworkChange = false
 }
 
 const GOOGLE_ANALYTICS_ID: string | undefined = process.env.REACT_APP_GOOGLE_ANALYTICS_ID
