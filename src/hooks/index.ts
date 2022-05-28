@@ -20,7 +20,7 @@ export function useEagerConnect() {
   useEffect(() => {
     const eagerConnect = async () => {
       if (!triedSafe) {
-        gnosisSafe.isSafeApp().then(loadedInSafe => {
+        gnosisSafe.isSafeApp().then((loadedInSafe: any) => {
           if (loadedInSafe) {
             activate(gnosisSafe, undefined, true).catch(() => {
               setTriedSafe(true)
@@ -34,7 +34,7 @@ export function useEagerConnect() {
 
         const existingConnector = isMetaMask ? injected : xDefi
 
-        existingConnector.isAuthorized().then(isAuthorized => {
+        existingConnector.isAuthorized().then((isAuthorized: any) => {
           if (isAuthorized) {
             activate(existingConnector, undefined, true).catch(() => {
               setTried(true)
