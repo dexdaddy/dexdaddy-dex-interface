@@ -20,7 +20,7 @@ export function useEagerConnect() {
   useEffect(() => {
     const eagerConnect = async () => {
       if (!triedSafe) {
-        gnosisSafe.isSafeApp().then((loadedInSafe: any) => {
+        gnosisSafe.isSafeApp().then(loadedInSafe => {
           if (loadedInSafe) {
             activate(gnosisSafe, undefined, true).catch(() => {
               setTriedSafe(true)
@@ -34,20 +34,27 @@ export function useEagerConnect() {
 
         const existingConnector = isMetaMask ? injected : xDefi
 
-        existingConnector.isAuthorized().then((isAuthorized: any) => {
+        existingConnector.isAuthorized().then(isAuthorized => {
           if (isAuthorized) {
             activate(existingConnector, undefined, true).catch(() => {
               setTried(true)
             })
           } else {
-            // if (isMobile && (window.ethereum || window.xfi.ethereum)) {
-            //   activate(existingConnector, undefined, true).catch(() => {
-            //     setTried(true)
-            //   })
-            // } else {
-            //   setTried(true)
-            // }
-            setTried(true)
+            if (isMobile) {
+              if (window.ethereum) {
+                activate(injected, undefined, true).catch(() => {
+                  setTried(true)
+                })
+              } else if (window.xfi && window.xfi.ethereum) {
+                activate(xDefi, undefined, true).catch(() => {
+                  setTried(true)
+                })
+              } else {
+                setTried(true)
+              }
+            } else {
+              setTried(true)
+            }
           }
         })
       }
