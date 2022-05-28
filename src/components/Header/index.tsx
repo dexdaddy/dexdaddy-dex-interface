@@ -9,9 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { ChevronDown } from 'react-feather'
 import styled from 'styled-components'
 import Logo from '../../assets/svg/icon.svg'
-import LogoDark from '../../assets/svg/icon.svg'
 import { useActiveWeb3React } from '../../hooks'
-import { useDarkModeManager } from '../../state/user/hooks'
 import { useETHBalances, useAggregatePngBalance } from '../../state/wallet/hooks'
 import { CardNoise } from '../earn/styled'
 import { CountUp } from 'use-count-up'
@@ -24,13 +22,12 @@ import Web3Status from '../Web3Status'
 import Modal from '../Modal'
 import PngBalanceContent from './PngBalanceContent'
 import usePrevious from '../../hooks/usePrevious'
-import { ANALYTICS_PAGE } from '../../constants'
 import LanguageSelection from '../LanguageSelection'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useToggleModal } from '../../state/application/hooks'
 import { MenuFlyout, MenuNavItem, MenuNavItemV2 } from '../StyledMenu'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
-import { BETA_MENU_LINK } from 'src/constants'
+import { BETA_MENU_LINK, ANALYTICS_PAGE } from 'src/constants'
 import { Hidden } from 'src/theme'
 import { useChainId } from 'src/hooks'
 import { isMobile } from 'react-device-detect'
@@ -362,7 +359,6 @@ export default function Header() {
   const location: any = useLocation()
 
   const userEthBalance = useETHBalances(chainId, account ? [account] : [])?.[account ?? '']
-  const [isDark] = useDarkModeManager()
 
   const aggregateBalance: TokenAmount | undefined = useAggregatePngBalance()
 
