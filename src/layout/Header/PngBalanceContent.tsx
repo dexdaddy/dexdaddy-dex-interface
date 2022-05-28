@@ -1,9 +1,9 @@
-import { TokenAmount, JSBI, ChainId } from '@pangolindex/sdk'
+import { TokenAmount, JSBI, ChainId, CHAINS } from '@pangolindex/sdk'
 import React, { useMemo, useState } from 'react'
 import { X } from 'react-feather'
 import styled from 'styled-components'
 import tokenLogo from 'src/assets/images/logo.png'
-import { injected } from '../../connectors'
+import { injected } from '@pangolindex/components'
 import { BETA_MENU_LINK, getTokenLogoURL, PANGOLIN_API_BASE_URL } from '../../constants'
 import { PNG } from '../../constants/tokens'
 import { useTotalSupply } from '../../data/TotalSupply'
@@ -18,7 +18,6 @@ import { Break, CardBGImage, CardNoise, CardSection, DataCard } from '../../comp
 import { useTranslation } from 'react-i18next'
 import { useIsBetaUI } from '../../hooks/useLocation'
 import useUSDCPrice from '../../utils/useUSDCPrice'
-import { CHAINS } from '../../constants/chains'
 import { useChainId } from 'src/hooks'
 
 const ContentWrapper = styled(AutoColumn)`
@@ -79,7 +78,7 @@ export default function PngBalanceContent({ setShowPngBalanceModal }: { setShowP
   let pngPrice
 
   const usdcPriceTmp = useUSDCPrice(png)
-  const usdcPrice = CHAINS[chainId].is_mainnet ? usdcPriceTmp : undefined
+  const usdcPrice = CHAINS[chainId].mainnet ? usdcPriceTmp : undefined
 
   if (usdcPrice && png) {
     pngPrice = usdcPrice.quote(new TokenAmount(png, oneToken), chainId)

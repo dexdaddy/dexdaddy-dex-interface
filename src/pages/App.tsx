@@ -15,7 +15,6 @@ import {
   RedirectToAddLiquidity
 } from './AddLiquidity/redirects'
 import { EarnV1, EarnV2, ManageV1, ManageV2 } from './Earn'
-// import ManageEarn from './Earn/Manage'
 import Stake from './Stake'
 import ManageStake from './Stake/Manage'
 import Pool from './Pool'
@@ -166,7 +165,7 @@ export default function App() {
               <CustomRoute exact strict path={`${BETA_MENU_LINK.buy}`} component={BuyV2} layout={Layout} />
               <CustomRoute exact path={`${BETA_MENU_LINK.pool}`} component={PoolV2} layout={Layout} />
               <CustomRoute exact path={`${BETA_MENU_LINK.bridge}`} component={BridgeV2} layout={Layout} />
-              <CustomRoute exact strict path={`${BETA_MENU_LINK.airdrop}`} component={AirdropV2} layout={Layout} />
+              <CustomRoute exact path={`${BETA_MENU_LINK.airdrop}`} component={AirdropV2} layout={Layout} />
 
               {/* <Route exact path="/beta/migrate/:version" component={MigrateV2} /> */}
 

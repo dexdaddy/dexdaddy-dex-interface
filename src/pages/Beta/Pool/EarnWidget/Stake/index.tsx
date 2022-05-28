@@ -1,6 +1,4 @@
-import React, { useState, useCallback, useContext, useEffect } from 'react'
-import { ThemeContext } from 'styled-components'
-import { ChevronDown } from 'react-feather'
+import React, { useState, useCallback, useEffect } from 'react'
 import useTransactionDeadline from 'src/hooks/useTransactionDeadline'
 import {
   StakeWrapper,
@@ -14,15 +12,13 @@ import {
   CardContentBox
 } from './styleds'
 import { Box, Text, Button, DoubleCurrencyLogo, NumberOptions } from '@pangolindex/components'
-import { useActiveWeb3React } from 'src/hooks'
+import { useActiveWeb3React, useChainId } from 'src/hooks'
 import { TokenAmount, Pair, JSBI, Token } from '@pangolindex/sdk'
-import { unwrappedToken } from 'src/utils/wrappedCurrency'
-import { useGetPoolDollerWorth, useMinichefStakingInfos, useMinichefPendingRewards } from 'src/state/stake/hooks'
+import { unwrappedToken, wrappedCurrencyAmount } from 'src/utils/wrappedCurrency'
+import { useGetPoolDollerWorth, useMinichefPendingRewards, useDerivedStakeInfo, useMinichefPools, StakingInfo  } from 'src/state/stake/hooks'
 import { usePairContract, useStakingContract } from 'src/hooks/useContract'
 import { useApproveCallback, ApprovalState } from 'src/hooks/useApproveCallback'
 import { splitSignature } from 'ethers/lib/utils'
-import { useDerivedStakeInfo, useMinichefPools } from 'src/state/stake/hooks'
-import { wrappedCurrencyAmount } from 'src/utils/wrappedCurrency'
 import { TransactionResponse } from '@ethersproject/providers'
 import { useTransactionAdder } from 'src/state/transactions/hooks'
 import { useTranslation } from 'react-i18next'
@@ -31,25 +27,26 @@ import { useTokenBalance } from 'src/state/wallet/hooks'
 import Stat from 'src/components/Stat'
 import TransactionCompleted from 'src/components/Beta/TransactionCompleted'
 import Loader from 'src/components/Beta/Loader'
-import { useChainId } from 'src/hooks'
+import { usePair } from 'src/data/Reserves'
 
 interface StakeProps {
-  pair: Pair | null
   version: number
   onComplete?: () => void
   type: 'card' | 'detail'
+  stakingInfo: StakingInfo
   combinedApr?: number
 }
 
-const Stake = ({ pair, version, onComplete, type, combinedApr }: StakeProps) => {
+const Stake = ({ version, onComplete, type, stakingInfo, combinedApr }: StakeProps) => {
   const { account, library } = useActiveWeb3React()
   const chainId = useChainId()
 
-  const [selectedPair, setSelectedPair] = useState<Pair | null>(pair)
+  const token0 = stakingInfo.tokens[0]
+  const token1 = stakingInfo.tokens[1]
 
-  const stakingInfo = useMinichefStakingInfos(2, selectedPair)?.[0]
+  const [, stakingTokenPair] = usePair(token0, token1)
 
-  const theme = useContext(ThemeContext)
+  const [selectedPair, setSelectedPair] = useState<Pair | null>(stakingTokenPair)
 
   const userLiquidityUnstaked = useTokenBalance(account ?? undefined, selectedPair?.liquidityToken)
   const { liquidityInUSD } = useGetPoolDollerWorth(selectedPair)
@@ -136,11 +133,11 @@ const Stake = ({ pair, version, onComplete, type, combinedApr }: StakeProps) => 
             })
             setHash(response.hash)
           })
-          .catch((error: any) => {
+          .catch((err: any) => {
             setAttempting(false)
             // we only care if the error is something _other_ than the user rejected the tx
-            if (error?.code !== 4001) {
-              console.error(error)
+            if (err?.code !== 4001) {
+              console.error(err)
             }
           })
       } else if (signatureData) {
@@ -171,11 +168,11 @@ const Stake = ({ pair, version, onComplete, type, combinedApr }: StakeProps) => 
             })
             setHash(response.hash)
           })
-          .catch((error: any) => {
+          .catch((err: any) => {
             setAttempting(false)
             // we only care if the error is something _other_ than the user rejected the tx
-            if (error?.code !== 4001) {
-              console.error(error)
+            if (err?.code !== 4001) {
+              console.error(err)
             }
           })
       } else {
@@ -186,9 +183,9 @@ const Stake = ({ pair, version, onComplete, type, combinedApr }: StakeProps) => 
   }
 
   // wrapped onUserInput to clear signatures
-  const onUserInput = useCallback((typedValue: string) => {
+  const onUserInput = useCallback((_typedValue: string) => {
     setSignatureData(null)
-    setTypedValue(typedValue)
+    setTypedValue(_typedValue)
   }, [])
 
   // used for max input button
@@ -254,9 +251,9 @@ const Stake = ({ pair, version, onComplete, type, combinedApr }: StakeProps) => 
           deadline: deadline.toNumber()
         })
       })
-      .catch(error => {
+      .catch(err => {
         // for all errors other than 4001 (EIP-1193 user rejected request), fall back to manual approve
-        if (error?.code !== 4001) {
+        if (err?.code !== 4001) {
           approveCallback()
         }
       })
@@ -299,8 +296,8 @@ const Stake = ({ pair, version, onComplete, type, combinedApr }: StakeProps) => 
   }, [userLiquidityUnstaked?.toExact()])
 
   const onPoolSelect = useCallback(
-    pair => {
-      setSelectedPair(pair)
+    pairSelected => {
+      setSelectedPair(pairSelected)
     },
     [setSelectedPair]
   )
@@ -311,20 +308,29 @@ const Stake = ({ pair, version, onComplete, type, combinedApr }: StakeProps) => 
     ? (Number(typedValue) * liquidityInUSD) / Number(userLiquidityUnstaked?.toExact())
     : undefined
 
+  const getApr = () => {
+    if (combinedApr) {
+      return `${combinedApr}%`
+    } else if (stakingInfo?.combinedApr) {
+      return `${stakingInfo?.combinedApr}%`
+    } else {
+      return '-'
+    }
+  }
+
   return (
     <StakeWrapper>
       {!attempting && !hash && (
         <>
           <Box flex={1}>
             {type === 'detail' && (
-              <PoolSelectWrapper onClick={() => setIsPoolDrawerOpen(true)}>
+              <PoolSelectWrapper>
                 <Box display="flex" alignItems="center">
                   <DoubleCurrencyLogo size={24} currency0={currency0} currency1={currency1} />
                   <Text color="text2" fontSize={16} fontWeight={500} lineHeight="40px" marginLeft={10}>
                     {currency0?.symbol}/{currency1?.symbol}
                   </Text>
                 </Box>
-                <ChevronDown size="16" color={theme.text1} />
               </PoolSelectWrapper>
             )}
 
@@ -339,7 +345,7 @@ const Stake = ({ pair, version, onComplete, type, combinedApr }: StakeProps) => 
                   </Box>
                 }
                 onChange={(value: any) => {
-                  onUserInput(value as any)
+                  onUserInput(value)
                 }}
                 fontSize={24}
                 isNumeric={true}
@@ -358,7 +364,7 @@ const Stake = ({ pair, version, onComplete, type, combinedApr }: StakeProps) => 
               <Box mt={type === 'card' ? '25px' : '0px'}>
                 <NumberOptions
                   onChange={value => {
-                    setStepIndex(type === 'card' ? value / 25 : value )
+                    setStepIndex(type === 'card' ? value / 25 : value)
                     onChangePercentage(type === 'card' ? value : value * 25)
                   }}
                   currentValue={type === 'card' ? stepIndex * 25 : stepIndex}
@@ -391,7 +397,7 @@ const Stake = ({ pair, version, onComplete, type, combinedApr }: StakeProps) => 
 
                 <Stat
                   title={`APR`}
-                  stat={combinedApr ? `${combinedApr}%` : '-'}
+                  stat={getApr()}
                   titlePosition="top"
                   titleFontSize={14}
                   statFontSize={16}

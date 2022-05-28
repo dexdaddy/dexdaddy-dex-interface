@@ -34,7 +34,8 @@ export type TokenAddressMap = Readonly<{ [chainId in ChainId]: Readonly<{ [token
 const EMPTY_LIST: TokenAddressMap = {
   [ChainId.FUJI]: {},
   [ChainId.AVALANCHE]: {},
-  [ChainId.WAGMI]: {}
+  [ChainId.WAGMI]: {},
+  [ChainId.COSTON]: {}
 }
 
 const listCache: WeakMap<TokenList, TokenAddressMap> | null =
@@ -75,7 +76,7 @@ export function useTokenList(urls: string[] | undefined): TokenAddressMap {
 
   const tokenList = {} as { [chainId: string]: { [tokenAddress: string]: WrappedTokenInfo } }
   return useMemo(() => {
-    ;([] as string[]).concat(urls || []).forEach(url => {
+    ([] as string[]).concat(urls || []).forEach(url => {
       const current = lists[url]?.current
       if (url && current) {
         try {
