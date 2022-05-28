@@ -22,7 +22,7 @@ export default function LogoIcon({ collapsed }: LogoProps) {
       {!collapsed && (
         <Box ml={12}>
           <Text color="text1" fontSize={16}>
-            Pangolin
+            Dexdaddy
           </Text>
         </Box>
       )}

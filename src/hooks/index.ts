@@ -40,21 +40,14 @@ export function useEagerConnect() {
               setTried(true)
             })
           } else {
-            if (isMobile) {
-              if (window.ethereum) {
-                activate(injected, undefined, true).catch(() => {
-                  setTried(true)
-                })
-              } else if (window.xfi && window.xfi.ethereum) {
-                activate(xDefi, undefined, true).catch(() => {
-                  setTried(true)
-                })
-              } else {
-                setTried(true)
-              }
-            } else {
-              setTried(true)
-            }
+            // if (isMobile && (window.ethereum || window.xfi.ethereum)) {
+            //   activate(existingConnector, undefined, true).catch(() => {
+            //     setTried(true)
+            //   })
+            // } else {
+            //   setTried(true)
+            // }
+            setTried(true)
           }
         })
       }

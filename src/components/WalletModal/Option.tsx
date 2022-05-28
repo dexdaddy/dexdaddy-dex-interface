@@ -4,7 +4,7 @@ import { ExternalLink } from '../../theme'
 import { useIsBetaUI } from 'src/hooks/useLocation'
 
 const InfoCard = styled.button<{ active?: boolean }>`
-  background-color: ${({ theme, active }) => (active ? theme.bg3 : theme.bg2)};
+  background-color: #021a26;
   padding: 1rem;
   outline: none;
   border: 1px solid;

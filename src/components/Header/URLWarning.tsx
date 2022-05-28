@@ -11,7 +11,7 @@ import { BETA_MENU_LINK } from 'src/constants'
 const PhishAlert = styled.div<{ isActive: any }>`
   width: 100%;
   padding: 6px 6px;
-  background-color: ${({ theme }) => theme.blue1};
+  background-color: linear-gradient(to right, rgb(37 139 211), rgb(56 192 201));
   color: white;
   font-size: 11px;
   justify-content: space-between;
@@ -34,28 +34,28 @@ export default function URLWarning() {
     <PhishAlert isActive={showURLWarning}>
       <div style={{ display: 'flex' }}>
         <AlertTriangle style={{ marginRight: 6 }} size={12} /> {t('header.makeSureURLWarning')}
-        <code style={{ padding: '0 4px', display: 'inline', fontWeight: 'bold' }}>app.pangolin.exchange</code>
-        {!isBeta && (
-          <Text as="a" href={`#${BETA_MENU_LINK.swap}`}>
-            <code style={{ padding: '0 4px', display: 'inline', fontWeight: 'bold' }}>
-              {t('header.tryOurNewBetaSite')}
-            </code>
-          </Text>
-        )}
+        <code style={{ padding: '0 4px', display: 'inline', fontWeight: 'bold' }}>dex.dexdaddy.com</code>
+        {/* {!isBeta && (
+          // <Text as="a" href={`#${BETA_MENU_LINK.swap}`}>
+          //   <code style={{ padding: '0 4px', display: 'inline', fontWeight: 'bold' }}>
+          //     {t('header.tryOurNewBetaSite')}
+          //   </code>
+          // </Text>
+        )} */}
       </div>
       <StyledClose size={12} onClick={toggleURLWarning} />
     </PhishAlert>
-  ) : window.location.hostname === 'app.pangolin.exchange' ? (
+  ) : window.location.hostname === 'dex.dexdaddy.com' ? (
     <PhishAlert isActive={showURLWarning}>
       <div style={{ display: 'flex' }}>
         <AlertTriangle style={{ marginRight: 6 }} size={12} /> {t('header.alwaysMakeSureWarning')}
-        <code style={{ padding: '0 4px', display: 'inline', fontWeight: 'bold' }}>app.pangolin.exchange</code> -
+        <code style={{ padding: '0 4px', display: 'inline', fontWeight: 'bold' }}>dex.dexdaddy.com</code> -
         {t('header.bookmarkIt')}
-        <Text as="a" href={`#${BETA_MENU_LINK.swap}`}>
+        {/* <Text as="a" href={`#${BETA_MENU_LINK.swap}`}>
           <code style={{ padding: '0 4px', display: 'inline', fontWeight: 'bold' }}>
             {t('header.tryOurNewBetaSite')}
           </code>
-        </Text>
+        </Text> */}
       </div>
       <StyledClose size={12} onClick={toggleURLWarning} />
     </PhishAlert>
