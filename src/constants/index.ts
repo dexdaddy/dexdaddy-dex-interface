@@ -1,15 +1,13 @@
-import { ChainId, JSBI, Percent, Token, WAVAX } from '@pangolindex/sdk'
-import { AbstractConnector } from '@web3-react/abstract-connector'
-
-import { gnosisSafe, injected, walletconnect, walletlink, xDefi } from '../connectors'
+import { ChainId, JSBI, Percent, Token, WAVAX, CHAINS } from '@pangolindex/sdk'
 import { DAIe, PNG, USDC, USDCe, USDTe, UST, axlUST } from './tokens'
 
 export const GAS_PRICE = 225
 
 export const ROUTER_ADDRESS: { [chainId in ChainId]: string } = {
-  [ChainId.FUJI]: '0x2D99ABD9008Dc933ff5c0CD271B88309593aB921',
-  [ChainId.AVALANCHE]: '0xE54Ca86531e17Ef3616d22Ca28b0D458b6C89106',
-  [ChainId.WAGMI]: '0x2F99E88888ee24cbf1623FB7af7FD2e508123eb3'
+  [ChainId.FUJI]: CHAINS[ChainId.FUJI].contracts!.router,
+  [ChainId.AVALANCHE]: CHAINS[ChainId.AVALANCHE].contracts!.router,
+  [ChainId.WAGMI]: CHAINS[ChainId.WAGMI].contracts!.router,
+  [ChainId.COSTON]: CHAINS[ChainId.COSTON].contracts!.router
 }
 
 export const LANDING_PAGE = 'https://pangolin.exchange'
@@ -18,6 +16,8 @@ export const ANALYTICS_PAGE = 'https://info.pangolin.exchange'
 export const PANGOLIN_API_BASE_URL = `https://api.pangolin.exchange`
 
 export const PANGOLIN_TOKENS_REPO_RAW_BASE_URL = `https://raw.githubusercontent.com/pangolindex/tokens`
+
+export const DIRECTUS_GRAPHQL_URL = `https://p7gm7mqi.directus.app/graphql`
 
 export type LogoSize = 24 | 48
 export const getTokenLogoURL = (address: string, size: LogoSize = 24) =>
@@ -31,8 +31,9 @@ export const BRIDGE_MIGRATOR_ADDRESS = '0x4b23Aa72A1214d0E4fd3f2c8Da7C6ba660F748
 
 export const MINICHEF_ADDRESS: { [chainId in ChainId]: string } = {
   [ChainId.FUJI]: ZERO_ADDRESS,
-  [ChainId.AVALANCHE]: '0x1f806f7C8dED893fd3caE279191ad7Aa3798E928',
-  [ChainId.WAGMI]: '0x08B7fAC01886858CE741bfA7573D281F05730bF1'
+  [ChainId.AVALANCHE]: CHAINS[ChainId.AVALANCHE].contracts!.mini_chef!,
+  [ChainId.WAGMI]: CHAINS[ChainId.WAGMI].contracts!.mini_chef!,
+  [ChainId.COSTON]: CHAINS[ChainId.COSTON].contracts!.mini_chef!
 }
 
 export const NATIVE = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
@@ -44,14 +45,37 @@ type ChainTokenList = {
 
 export const AIRDROP_ADDRESS: { [chainId in ChainId]?: string } = {
   [ChainId.FUJI]: ZERO_ADDRESS,
-  [ChainId.AVALANCHE]: '0x0C58C2041da4CfCcF5818Bbe3b66DBC23B3902d9',
-  [ChainId.WAGMI]: '0xFf3A1Fbc721C9c1E92835b551e9A795FCdBa83e8'
+  [ChainId.AVALANCHE]: CHAINS[ChainId.AVALANCHE].contracts!.airdrop!,
+  [ChainId.WAGMI]: CHAINS[ChainId.WAGMI].contracts!.airdrop!,
+  [ChainId.COSTON]: CHAINS[ChainId.COSTON].contracts!.airdrop!
 }
 
 const WAVAX_AND_PNG_ONLY: ChainTokenList = {
   [ChainId.FUJI]: [WAVAX[ChainId.FUJI], PNG[ChainId.FUJI]],
   [ChainId.AVALANCHE]: [WAVAX[ChainId.AVALANCHE], PNG[ChainId.AVALANCHE]],
-  [ChainId.WAGMI]: [WAVAX[ChainId.WAGMI], PNG[ChainId.WAGMI]]
+  [ChainId.WAGMI]: [WAVAX[ChainId.WAGMI], PNG[ChainId.WAGMI]],
+  [ChainId.COSTON]: [WAVAX[ChainId.COSTON], PNG[ChainId.COSTON]]
+}
+
+export const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
+  [ChainId.FUJI]: CHAINS[ChainId.FUJI].name,
+  [ChainId.AVALANCHE]: CHAINS[ChainId.AVALANCHE].name,
+  [ChainId.WAGMI]: CHAINS[ChainId.WAGMI].name,
+  [ChainId.COSTON]: CHAINS[ChainId.COSTON].name
+}
+
+export const NETWORK_CURRENCY: { [chainId in ChainId]?: string } = {
+  [ChainId.FUJI]: CHAINS[ChainId.FUJI].symbol,
+  [ChainId.AVALANCHE]: CHAINS[ChainId.AVALANCHE].symbol,
+  [ChainId.WAGMI]: CHAINS[ChainId.WAGMI].symbol,
+  [ChainId.COSTON]: CHAINS[ChainId.COSTON].symbol
+}
+
+export const NETWORK_WRAPPED_CURRENCY: { [chainId in ChainId]?: string } = {
+  [ChainId.FUJI]: 'WAVAX',
+  [ChainId.AVALANCHE]: 'WAVAX',
+  [ChainId.WAGMI]: 'wWAGMI',
+  [ChainId.COSTON]: 'wCFLR'
 }
 
 // used to construct intermediary pairs for trading
@@ -67,7 +91,8 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     axlUST[ChainId.AVALANCHE],
     USDC[ChainId.AVALANCHE]
   ],
-  [ChainId.WAGMI]: [WAVAX[ChainId.WAGMI], PNG[ChainId.WAGMI]]
+  [ChainId.WAGMI]: [WAVAX[ChainId.WAGMI], PNG[ChainId.WAGMI]],
+  [ChainId.COSTON]: [WAVAX[ChainId.COSTON], PNG[ChainId.COSTON]]
 }
 
 /**
@@ -96,13 +121,14 @@ export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } 
 export const TRUSTED_TOKEN_ADDRESSES: { readonly [chainId in ChainId]: string[] } = {
   [ChainId.FUJI]: [],
   [ChainId.AVALANCHE]: [WAVAX[ChainId.AVALANCHE].address, PNG[ChainId.AVALANCHE].address],
-  [ChainId.WAGMI]: [WAVAX[ChainId.WAGMI].address, PNG[ChainId.WAGMI].address]
+  [ChainId.WAGMI]: [WAVAX[ChainId.WAGMI].address, PNG[ChainId.WAGMI].address],
+  [ChainId.COSTON]: [WAVAX[ChainId.COSTON].address, PNG[ChainId.COSTON].address]
 }
 
 export const SWAP_DEFAULT_CURRENCY = {
   [ChainId.AVALANCHE]: {
     inputCurrency: 'AVAX',
-    outputCurrency: axlUST[ChainId.AVALANCHE].address
+    outputCurrency: ''
   },
   [ChainId.FUJI]: {
     inputCurrency: '',
@@ -111,85 +137,11 @@ export const SWAP_DEFAULT_CURRENCY = {
   [ChainId.WAGMI]: {
     inputCurrency: '',
     outputCurrency: ''
+  },
+  [ChainId.COSTON]: {
+    inputCurrency: '',
+    outputCurrency: ''
   }
-}
-
-export interface WalletInfo {
-  connector?: AbstractConnector
-  name: string
-  iconName: string
-  description: string
-  href: string | null
-  color: string
-  primary?: true
-  mobile?: true
-  mobileOnly?: true
-}
-
-export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
-  INJECTED: {
-    connector: injected,
-    name: 'Injected',
-    iconName: 'arrow-right.svg',
-    description: 'Injected web3 provider.',
-    href: null,
-    color: '#010101',
-    primary: true
-  },
-  METAMASK: {
-    connector: injected,
-    name: 'MetaMask',
-    iconName: 'metamask.png',
-    description: 'Easy-to-use browser extension.',
-    href: null,
-    color: '#E8831D'
-  },
-  GNOSISSAFE: {
-    connector: gnosisSafe,
-    name: 'Gnosis Safe',
-    iconName: 'gnosis_safe.png',
-    description: 'Gnosis Safe Multisig Wallet.',
-    href: null,
-    color: '#010101'
-  },
-  WALLET_LINK: {
-    connector: walletlink,
-    name: 'Coinbase Wallet',
-    iconName: 'coinbaseWalletIcon.svg',
-    description: 'Use Coinbase Wallet app on mobile device',
-    href: null,
-    color: '#315CF5'
-  },
-  WALLET_CONNECT: {
-    connector: walletconnect,
-    name: 'Wallet Connect',
-    iconName: 'walletConnectIcon.svg',
-    description: 'Use Wallet Connect',
-    href: null,
-    color: '#315CF5'
-  },
-  XDEFI: {
-    connector: xDefi,
-    name: 'XDEFI',
-    iconName: 'xDefi.png',
-    description: window.xfi && window.xfi.ethereum ? 'Easy-to-use browser extension.' : 'Please Install',
-    href: null,
-    color: '#315CF5'
-  }
-}
-
-export const NetworkContextName = 'NETWORK'
-
-export const AVALANCHE_CHAIN_PARAMS = {
-  chainId: '0xa86a', // A 0x-prefixed hexadecimal chainId
-  chainName: 'Avalanche Mainnet C-Chain',
-  nativeCurrency: {
-    name: 'Avalanche',
-    symbol: 'AVAX',
-    decimals: 18
-  },
-  rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
-  blockExplorerUrls: ['https://snowtrace.io//']
 }
 
 // default allowed slippage, in bips

@@ -34,6 +34,7 @@ export enum ApplicationModal {
   PORTFOLIO_DATE,
   POOL_DETAIL,
   SINGLE_SIDE_STAKE_DETAIL,
+  ACCOUNT_DETAIL,
   DEX,
   EARN,
   NFT,
