@@ -448,10 +448,10 @@ export default function Header() {
                   <MenuNavItemV2 id="link" target="_blank" rel="" href="https://marketplace.dexdaddy.com">
                     {'Marketplace'}
                   </MenuNavItemV2>
-                  <MenuNavItemV2 id="link" target="_blank" rel="" href="https://launchpad.dexdaddy.com">
+                  <MenuNavItemV2 id="link" target="_blank" rel="" href="https://mint.dexdaddy.com/#/app/launchpad">
                     {'Launchpad'}
                   </MenuNavItemV2>
-                  <MenuNavItemV2 id="link" target="_blank" rel="" href="https://farm.dexdaddy.com">
+                  <MenuNavItemV2 id="link" target="_blank" rel="" href="https://mint.dexdaddy.com/#/app/farm">
                     {'Farm'}
                   </MenuNavItemV2>
                   <MenuNavItemV2 id="link" target="_blank" rel="" href="https://sale.dexdaddy.com">
